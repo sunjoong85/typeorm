@@ -1669,7 +1669,7 @@ export class SelectQueryBuilder<Entity> extends QueryBuilder<Entity> implements 
             let selectionPath = this.escape(aliasName) + "." + this.escape(column.databaseName);
             if (this.connection.driver.spatialTypes.indexOf(column.type) !== -1) {
                 if (this.connection.driver instanceof MysqlDriver)
-                    selectionPath = `AsText(${selectionPath})`;
+                    selectionPath = `ST_AsText(${selectionPath})`;
 
                 if (this.connection.driver instanceof PostgresDriver)
                     // cast to JSON to trigger parsing in the driver

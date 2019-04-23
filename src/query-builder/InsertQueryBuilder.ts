@@ -462,7 +462,7 @@ export class InsertQueryBuilder<Entity> extends QueryBuilder<Entity> {
 
                         this.expressionMap.nativeParameters[paramName] = value;
                         if (this.connection.driver instanceof MysqlDriver && this.connection.driver.spatialTypes.indexOf(column.type) !== -1) {
-                            expression += `GeomFromText(${this.connection.driver.createParameter(paramName, parametersCount)})`;
+                            expression += `ST_GeomFromText(${this.connection.driver.createParameter(paramName, parametersCount)})`;
                         } else if (this.connection.driver instanceof PostgresDriver && this.connection.driver.spatialTypes.indexOf(column.type) !== -1) {
                             if (column.srid != null) {
                               expression += `ST_SetSRID(ST_GeomFromGeoJSON(${this.connection.driver.createParameter(paramName, parametersCount)}), ${column.srid})::${column.type}`;
